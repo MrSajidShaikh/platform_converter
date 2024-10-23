@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "platform_converter" "\0"
+            VALUE "FileDescription", "platform_converter_app" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "platform_converter" "\0"
+            VALUE "InternalName", "platform_converter_app" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2024 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "platform_converter.exe" "\0"
-            VALUE "ProductName", "platform_converter" "\0"
+            VALUE "OriginalFilename", "platform_converter_app.exe" "\0"
+            VALUE "ProductName", "platform_converter_app" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

@@ -1,43 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:platform_converter/Provider/lec_2.1_provider.dart';
-import 'package:platform_converter/Provider/theme_provider.dart';
+import 'package:platform_converter_app/provider/provider_homepage.dart';
+import 'package:platform_converter_app/view/home_page.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'Provider/platform_change_provider.dart';
-import 'Provider/platform_provider.dart';
-import 'Screen/cupertino_ui.dart';
-import 'Screen/material_ui.dart';
 
-bool isDark = false;
-bool isIos = false;
-
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-  isDark = sharedPreferences.getBool("theme") ?? false;
-  isIos = sharedPreferences.getBool("platform") ?? false;
-
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (context) => Lec2Provider(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => PlatFormProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => ThemeController(isDark),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => PlatformChangeProvider(isIos),
-        ),
-      ],
-      child: const MyApp(),
-    ),
-  );
+void main() {
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -45,21 +12,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var providerTheme = Provider.of<ThemeController>(context);
-    return (!Provider.of<PlatformChangeProvider>(context).isIos)
-        ? MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: (providerTheme.isDark)
-          ? providerTheme.themeDark
-          : providerTheme.themeLight,
-      home: const MaterialUi(),
-    )
-        : CupertinoApp(
-      debugShowCheckedModeBanner: false,
-      theme: (providerTheme.isDark)
-          ? providerTheme.cupertinoThemeDark
-          : providerTheme.cupertinoThemeLight,
-      home: const CupertinoUi(),
+    return ChangeNotifierProvider(create: (context) => ProviderHomepage(),
+      builder:(context, child) =>  MaterialApp(
+        themeMode: Provider.of<ProviderHomepage>(context, listen: true).isDark ? ThemeMode.dark : ThemeMode.light,
+        darkTheme: ThemeData.dark(),
+        theme: ThemeData.light(),
+        debugShowCheckedModeBanner: false,
+        home:const HomePage(),
+      ),
     );
   }
 }
